@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="login-content">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>We - Cencosud - Scotiabank</title>
+
+        <!-- Vendor CSS -->
+        <link href="/css/animate.min.css" rel="stylesheet" />
+        <link href="/css/material-design-iconic-font.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/webjars/bootstrap/3.3.2/css/bootstrap.min.css"/>
+
+        <!-- CSS -->
+        <link href="/css/app.min.1.css" rel="stylesheet" />
+        <link href="/css/app.min.2.css" rel="stylesheet" />
+    </head>
+    <body class="login-content">
+        <form id="confirmationForm" name="confirmationForm" th:action="${request_path}" method="post" autocomplete="off" class="lc-block toggled without-margin">
+            <h4 class="label-authorize">Deseas autorizar a "<span th:text="${client_id}">test</span>" a acceder a tu información?</h4>
+            <input name="user_oauth_approval" value="true" type="hidden"/>
+            <input th:if="${_csrf}" type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}"/>
+            <ul>
+                <li th:each="scope : ${scopes.keySet()}" class="scope-list">
+                    <div class="form-group">
+
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" th:name="${scope}" value="" />
+                                <i class="input-helper"></i>
+                                <!--span th:text="${scope.split('.')[1].toUpperCase()}"></span-->
+                                <span th:text="${#strings.capitalize(#strings.arraySplit(scope,'.')[0])}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="clearfix"></div>
+            <button name="authorize" type="submit" class="btn btn-login btn-info btn-float"><i class="zmdi zmdi-thumb-up"></i></button>
+            <div class="color-bar"><div class="color azul"></div><div class="color naranja"></div><div class="color grey"></div><div class="color red"></div></div>
+        </form>
+    </body>
+</html>
