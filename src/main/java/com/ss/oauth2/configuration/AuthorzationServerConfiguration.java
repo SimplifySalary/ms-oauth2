@@ -59,8 +59,10 @@ public class AuthorzationServerConfiguration extends AuthorizationServerConfigur
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-    oauthServer.passwordEncoder(this.passwordEncoder)
-    .tokenKeyAccess("permitAll()");
+    oauthServer
+      .checkTokenAccess("permitAll()")
+      .passwordEncoder(this.passwordEncoder)
+      .tokenKeyAccess("permitAll()");
   }
 
   @Override
