@@ -26,7 +26,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         .antMatchers("/api/**")
       .and()
         .authorizeRequests()
-          .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('api') and hasRole('ROLE_ADMIN')")
+          //.antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('api') and hasRole('ROLE_ADMIN')")
           .anyRequest().authenticated()
       .and()
         .exceptionHandling()

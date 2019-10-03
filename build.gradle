@@ -124,37 +124,22 @@ test {
 
 check.dependsOn jacocoTestReport
 
-if (!project.hasProperty("dockerImgName")) {
-	ext.dockerImgName = "${bootJar.baseName}"
-}
-if (!project.hasProperty("dockerTag")) {
-	ext.dockerTag = "latest"
-}
-if (!project.hasProperty("dockerRegistry")) {
-	ext.dockerRegistry = "docker.dev.redbee.io"
-}
-if (!project.hasProperty("dockerPushToRegistry")) {
-	ext.dockerPushToRegistry = true
-}
-
 task buildDocker(type: Docker, dependsOn: build) {
-	baseImage = "registryrfsc.azurecr.io/common/openjdk:8u212-jdk-alpine3.9"
-	maintainer = "RFSC"
-	hostUrl = "https://docker.dev.redbee.io"
-	push = dockerPushToRegistry.toBoolean()
+	baseImage = "openjdk:8"
+	maintainer = "@britez"
 	dryRun = false
-	tagVersion = "${dockerTag}"
-	tag = "${dockerRegistry}/${dockerImgName}"
+	tagVersion = "latest"
+	tag = "${bootJar.baseName}"
 	addFile {
 		from bootJar
-		rename { "${dockerImgName}.jar" }
+		rename { "${bootJar.baseName}.jar" }
 	}
 	addFile("./java-entrypoint.sh", "/java-entrypoint.sh")
 	exposePort(8080)
 
 	entryPoint([
 			"/java-entrypoint.sh",
-			"/${dockerImgName}.jar"
+			"/${bootJar.baseName}.jar"
 	])
 }
 

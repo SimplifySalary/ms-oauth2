@@ -21,6 +21,7 @@ import java.util.ArrayList;
 @Configuration
 @EnableSwagger2
 public class SwaggerDocumentationConfig {
+
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger Oauth2 Server")
@@ -48,7 +49,7 @@ public class SwaggerDocumentationConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .globalOperationParameters(params)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.rfsc.oauth2.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.ss.oauth2.controllers"))
                 .build()
                 .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
